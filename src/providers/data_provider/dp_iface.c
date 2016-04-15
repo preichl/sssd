@@ -29,7 +29,7 @@
 struct iface_dp iface_dp = {
     {&iface_dp_meta, 0},
     .pamHandler = NULL,
-    .sudoHandler = NULL,
+    .sudoHandler = dp_sudo_handler,
     .autofsHandler = NULL,
     .hostHandler = NULL,
     .getDomains = NULL,
