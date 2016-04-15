@@ -25,6 +25,11 @@
 
 /* Request handler private data. */
 
+struct dp_sudo_data {
+    uint32_t type;
+    char **rules;
+};
+
 /* Reply private data. */
 
 struct dp_reply_std {
