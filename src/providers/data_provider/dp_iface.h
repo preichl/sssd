@@ -30,4 +30,6 @@
 errno_t dp_register_sbus_interface(struct sbus_connection *conn,
                                    struct dp_client *pvt);
 
+errno_t dp_sudo_handler(struct sbus_request *sbus_req, void *dp_cli);
+
 #endif /* DP_IFACE_H_ */
