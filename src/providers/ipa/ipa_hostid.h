@@ -28,8 +28,6 @@ struct ipa_hostid_ctx {
     struct sdap_search_base **host_search_bases;
 };
 
-void ipa_host_info_handler(struct be_req *be_req);
-
 struct tevent_req *
 ipa_hostid_handler_send(TALLOC_CTX *mem_ctx,
                        struct ipa_hostid_ctx *hostid_ctx,
