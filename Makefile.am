@@ -2945,7 +2945,7 @@ libsss_ldap_common_la_SOURCES += \
     src/providers/ldap/sdap_async_sudo_hostinfo.c \
     src/providers/ldap/sdap_sudo_refresh.c \
     src/providers/ldap/sdap_sudo_shared.c \
-    src/providers/ldap/sdap_sudo.c
+    src/providers/ldap/sdap_sudo_new.c
 endif
 
 if BUILD_AUTOFS
@@ -2980,7 +2980,7 @@ libsss_krb5_common_la_LDFLAGS = \
     -avoid-version
 
 libsss_ldap_la_SOURCES = \
-    src/providers/ldap/ldap_init.c \
+    src/providers/ldap/ldap_init_new.c \
     src/providers/ldap/ldap_access.c
 libsss_ldap_la_CFLAGS = \
     $(AM_CFLAGS) \
@@ -2996,7 +2996,7 @@ libsss_ldap_la_LDFLAGS = \
 
 
 libsss_proxy_la_SOURCES = \
-    src/providers/proxy/proxy_init.c \
+    src/providers/proxy/proxy_init_new.c \
     src/providers/proxy/proxy_client.c \
     src/providers/proxy/proxy_id.c \
     src/providers/proxy/proxy_netgroup.c \
@@ -3022,7 +3022,7 @@ libsss_simple_la_LDFLAGS = \
     -module
 
 libsss_krb5_la_SOURCES = \
-    src/providers/krb5/krb5_init.c
+    src/providers/krb5/krb5_init_new.c
 libsss_krb5_la_CFLAGS = \
     $(AM_CFLAGS) \
     $(DHASH_CFLAGS) \
@@ -3037,7 +3037,7 @@ libsss_krb5_la_LDFLAGS = \
     -module
 
 libsss_ipa_la_SOURCES = \
-    src/providers/ipa/ipa_init.c \
+    src/providers/ipa/ipa_init_new.c \
     src/providers/ipa/ipa_opts.c \
     src/providers/ipa/ipa_common.c \
     src/providers/ipa/ipa_config.c \
@@ -3108,14 +3108,14 @@ endif
 
 if BUILD_SUDO
 libsss_ipa_la_SOURCES += \
-    src/providers/ipa/ipa_sudo.c \
+    src/providers/ipa/ipa_sudo_new.c \
     src/providers/ipa/ipa_sudo_refresh.c \
     src/providers/ipa/ipa_sudo_conversion.c \
     src/providers/ipa/ipa_sudo_async.c
 endif
 
 if BUILD_SSH
-libsss_ipa_la_SOURCES += src/providers/ipa/ipa_hostid.c
+libsss_ipa_la_SOURCES += src/providers/ipa/ipa_hostid_new.c
 endif
 
 
@@ -3123,7 +3123,7 @@ libsss_ad_la_SOURCES = \
     src/providers/ad/ad_opts.c \
     src/providers/ad/ad_common.c \
     src/providers/ad/ad_common.h \
-    src/providers/ad/ad_init.c \
+    src/providers/ad/ad_init_new.c \
     src/providers/ad/ad_dyndns.c \
     src/providers/ad/ad_machine_pw_renewal.c \
     src/providers/ad/ad_id.c \
@@ -3145,7 +3145,7 @@ libsss_ad_la_SOURCES = \
 
 if BUILD_SUDO
 libsss_ad_la_SOURCES += \
-    src/providers/ad/ad_sudo.c
+    src/providers/ad/ad_sudo_new.c
 endif
 
 if BUILD_AUTOFS
