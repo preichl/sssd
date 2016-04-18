@@ -154,8 +154,6 @@ errno_t proxy_account_info_handler_recv(TALLOC_CTX *mem_ctx,
                                        struct tevent_req *req,
                                        struct dp_reply_std *data);
 
-void proxy_get_account_info(struct be_req *breq);
-
 /* From proxy_auth.c */
 void proxy_pam_handler(struct be_req *req);
 

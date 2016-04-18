@@ -33,12 +33,8 @@ errno_t ad_account_info_handler_recv(TALLOC_CTX *mem_ctx,
                                       struct tevent_req *req,
                                       struct dp_reply_std *data);
 
-void
-ad_account_info_handler(struct be_req *breq);
-
 struct tevent_req *
 ad_handle_acct_info_send(TALLOC_CTX *mem_ctx,
-                         struct be_req *breq,
                          struct be_acct_req *ar,
                          struct sdap_id_ctx *ctx,
                          struct ad_options *ad_options,
