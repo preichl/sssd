@@ -9,6 +9,9 @@
 /* invokes a handler with a 's' DBus signature */
 static int invoke_s_method(struct sbus_request *dbus_req, void *function_ptr);
 
+/* invokes a handler with a 'uss' DBus signature */
+static int invoke_uss_method(struct sbus_request *dbus_req, void *function_ptr);
+
 /* arguments for org.freedesktop.sssd.DataProvider.Client.Register */
 const struct sbus_arg_meta iface_dp_client_Register__in[] = {
     { "Name", "s" },
@@ -42,6 +45,31 @@ const struct sbus_interface_meta iface_dp_client_meta = {
     sbus_invoke_get_all, /* GetAll invoker */
 };
 
+/* arguments for org.freedesktop.sssd.dataprovider.hostHandler */
+const struct sbus_arg_meta iface_dp_hostHandler__in[] = {
+    { "dp_flags", "u" },
+    { "name", "s" },
+    { "alias", "s" },
+    { NULL, }
+};
+
+/* arguments for org.freedesktop.sssd.dataprovider.hostHandler */
+const struct sbus_arg_meta iface_dp_hostHandler__out[] = {
+    { "dp_error", "q" },
+    { "error", "u" },
+    { "error_message", "s" },
+    { NULL, }
+};
+
+int iface_dp_hostHandler_finish(struct sbus_request *req, uint16_t arg_dp_error, uint32_t arg_error, const char *arg_error_message)
+{
+   return sbus_request_return_and_finish(req,
+                                         DBUS_TYPE_UINT16, &arg_dp_error,
+                                         DBUS_TYPE_UINT32, &arg_error,
+                                         DBUS_TYPE_STRING, &arg_error_message,
+                                         DBUS_TYPE_INVALID);
+}
+
 /* methods for org.freedesktop.sssd.dataprovider */
 const struct sbus_method_meta iface_dp__methods[] = {
     {
@@ -67,10 +95,10 @@ const struct sbus_method_meta iface_dp__methods[] = {
     },
     {
         "hostHandler", /* name */
-        NULL, /* no in_args */
-        NULL, /* no out_args */
+        iface_dp_hostHandler__in,
+        iface_dp_hostHandler__out,
         offsetof(struct iface_dp, hostHandler),
-        NULL, /* no invoker */
+        invoke_uss_method,
     },
     {
         "getDomains", /* name */
@@ -112,4 +140,26 @@ static int invoke_s_method(struct sbus_request *dbus_req, void *function_ptr)
 
     return (handler)(dbus_req, dbus_req->intf->handler_data,
                      arg_0);
+}
+
+/* invokes a handler with a 'uss' DBus signature */
+static int invoke_uss_method(struct sbus_request *dbus_req, void *function_ptr)
+{
+    uint32_t arg_0;
+    const char * arg_1;
+    const char * arg_2;
+    int (*handler)(struct sbus_request *, void *, uint32_t, const char *, const char *) = function_ptr;
+
+    if (!sbus_request_parse_or_finish(dbus_req,
+                               DBUS_TYPE_UINT32, &arg_0,
+                               DBUS_TYPE_STRING, &arg_1,
+                               DBUS_TYPE_STRING, &arg_2,
+                               DBUS_TYPE_INVALID)) {
+         return EOK; /* request handled */
+    }
+
+    return (handler)(dbus_req, dbus_req->intf->handler_data,
+                     arg_0,
+                     arg_1,
+                     arg_2);
 }
