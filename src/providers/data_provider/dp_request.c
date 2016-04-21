@@ -414,3 +414,33 @@ void dp_terminate_domain_requests(struct data_provider *provider,
 
     dp_terminate_request_list(provider, domain);
 }
+
+struct dp_method *dp_find_method(struct data_provider *provider,
+                                 enum dp_targets target,
+                                 enum dp_methods method)
+{
+    struct dp_target *dp_target;
+    struct dp_method *execute;
+
+    if (target >= DP_TARGET_SENTINEL || method >= DP_METHOD_SENTINEL) {
+        DEBUG(SSSDBG_CRIT_FAILURE, "Bug: Invalid target or method ID\n");
+        return NULL;
+    }
+
+    dp_target = provider->targets[target];
+
+    if (dp_target == NULL || dp_target->initialized == false) {
+        DEBUG(SSSDBG_CRIT_FAILURE, "Target %s is not configured\n",
+              dp_target_to_string(target));
+        return NULL;
+    }
+
+    execute = &provider->targets[target]->methods[method];
+    if (execute->send_fn == NULL || execute->recv_fn == NULL) {
+        DEBUG(SSSDBG_CRIT_FAILURE,
+              "Bug: Invalid combination of target and method\n");
+        return NULL;
+    }
+
+    return execute;
+}

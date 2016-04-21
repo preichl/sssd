@@ -248,6 +248,7 @@ if HAVE_CMOCKA
         test_ldap_id_cleanup \
         test_data_provider_be \
         test_dp_request_table \
+        test_dp_request \
         test_ipa_dn \
         $(NULL)
 
@@ -1271,8 +1272,6 @@ sss_obfuscate_pythondir = $(sbindir)
 dist_sss_obfuscate_python_SCRIPTS = \
     src/tools/sss_obfuscate
 endif
-
-
 
 dist_noinst_DATA += \
     src/examples/sssd-example.conf \
@@ -2697,17 +2696,53 @@ test_dp_request_table_SOURCES = \
     src/tests/cmocka/test_dp_request_table.c \
     src/tests/cmocka/common_mock_be.c \
     $(NULL)
-test_dp_request_table_SOURCES_CFLAGS = \
+test_dp_request_table_CFLAGS = \
     $(AM_CFLAGS) \
     -DUNIT_TESTING \
     $(NULL)
-test_dp_request_table_SOURCES_LDFLAGS = \
+test_dp_request_table_LDFLAGS = \
     $(NULL)
 test_dp_request_table_LDADD = \
     $(CMOCKA_LIBS) \
     $(SSSD_LIBS) \
     $(SSSD_INTERNAL_LTLIBS) \
     $(LIBADD_DL) \
+    libsss_test_common.la \
+    $(NULL)
+
+test_dp_request_SOURCES = \
+    $(SSSD_FAILOVER_OBJ) \
+    src/monitor/monitor_iface_generated.c \
+    src/providers/be_ptask.c \
+    src/providers/be_refresh.c \
+    src/providers/data_provider_iface_generated.c \
+    src/providers/data_provider_req.c \
+    src/providers/data_provider_callbacks.c \
+    src/providers/data_provider_be.c \
+    src/providers/data_provider_fo.c \
+    src/providers/data_provider_opts.c \
+    src/providers/data_provider/dp_request.c \
+    src/providers/data_provider/dp_modules.c \
+    src/providers/data_provider/dp_targets.c \
+    src/tests/cmocka/test_dp_request.c \
+    src/tests/cmocka/common_mock_be.c \
+    $(NULL)
+test_dp_request_CFLAGS = \
+    $(AM_CFLAGS) \
+    -DUNIT_TESTING \
+    $(NULL)
+test_dp_request_LDFLAGS = \
+    -Wl,-wrap,be_is_offline \
+    $(NULL)
+test_dp_request_LDADD = \
+    $(CMOCKA_LIBS) \
+    $(SSSD_LIBS) \
+    $(SSSD_INTERNAL_LTLIBS) \
+    $(LIBADD_DL) \
+    $(CARES_LIBS) \
+    $(OPENLDAP_LIBS) \
+    $(KRB5_LIBS) \
+    libsss_krb5_common.la \
     libsss_test_common.la \
     $(NULL)
 

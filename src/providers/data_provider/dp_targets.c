@@ -349,7 +349,7 @@ static errno_t dp_load_targets(struct be_ctx *be_ctx,
 
     for (type = 0; type < DP_TARGET_SENTINEL; type++) {
         ret = dp_target_init(be_ctx, provider, modules, targets[type]);
-        if (ret == EOK) {
+        if (ret != EOK) {
             DEBUG(SSSDBG_CRIT_FAILURE, "Unable to load target [%s] "
                   "[%d]: %s.\n", targets[type]->name, ret, sss_strerror(ret));
             ret = ERR_INTERNAL;
