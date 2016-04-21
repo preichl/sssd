@@ -23,8 +23,12 @@
             <annotation name="org.freedesktop.sssd.RawHandler" value="true"/>
         </method>
         <method name="hostHandler">
-            <!-- arguments parsed manually, raw handler -->
-            <annotation name="org.freedesktop.sssd.RawHandler" value="true"/>
+            <arg name="dp_flags" type="u" direction="in" />
+            <arg name="name" type="s" direction="in" />
+            <arg name="alias" type="s" direction="in" />
+            <arg name="dp_error" type="q" direction="out" />
+            <arg name="error" type="u" direction="out" />
+            <arg name="error_message" type="s" direction="out" />
         </method>
         <method name="getDomains">
             <!-- arguments parsed manually, raw handler -->

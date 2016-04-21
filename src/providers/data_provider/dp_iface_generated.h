@@ -57,10 +57,13 @@ struct iface_dp {
     sbus_msg_handler_fn pamHandler;
     sbus_msg_handler_fn sudoHandler;
     sbus_msg_handler_fn autofsHandler;
-    sbus_msg_handler_fn hostHandler;
+    int (*hostHandler)(struct sbus_request *req, void *data, uint32_t arg_dp_flags, const char *arg_name, const char *arg_alias);
     sbus_msg_handler_fn getDomains;
     sbus_msg_handler_fn getAccountInfo;
 };
+
+/* finish function for hostHandler */
+int iface_dp_hostHandler_finish(struct sbus_request *req, uint16_t arg_dp_error, uint32_t arg_error, const char *arg_error_message);
 
 /* ------------------------------------------------------------------------
  * DBus Interface Metadata

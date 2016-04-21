@@ -30,6 +30,11 @@ struct dp_sudo_data {
     char **rules;
 };
 
+struct dp_hostid_data {
+    const char *name;
+    const char *alias;
+};
+
 /* Reply private data. */
 
 struct dp_reply_std {
