@@ -18,25 +18,45 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DP_IFACE_H_
-#define DP_IFACE_H_
+#include <talloc.h>
+#include <tevent.h>
 
 #include "sbus/sssd_dbus.h"
 #include "providers/data_provider/dp_private.h"
-#include "providers/data_provider/dp_responder_iface.h"
-#include "providers/data_provider/dp.h"
-
-#define DP_PATH "/org/freedesktop/sssd/dataprovider"
-
-errno_t dp_register_sbus_interface(struct sbus_connection *conn,
-                                   struct dp_client *pvt);
-
-errno_t dp_sudo_handler(struct sbus_request *sbus_req, void *dp_cli);
+#include "providers/data_provider/dp_iface.h"
+#include "providers/backend.h"
+#include "util/util.h"
 
 errno_t dp_host_handler(struct sbus_request *sbus_req,
                         void *dp_cli,
                         uint32_t dp_flags,
                         const char *name,
-                        const char *alias);
+                        const char *alias)
+{
+    struct dp_hostid_data *data;
+    const char *key;
 
-#endif /* DP_IFACE_H_ */
+    if (name == NULL) {
+        return EINVAL;
+    }
+
+    data = talloc_zero(sbus_req, struct dp_hostid_data);
+    if (data == NULL) {
+        return ENOMEM;
+    }
+
+    data->name = name;
+    data->alias = alias[0] == '\0' ? NULL : alias;
+
+    key = talloc_asprintf("%s:%s", name, (alias == NULL ? "(null)" : alias));
+    if (key == NULL) {
+        talloc_free(data);
+        return ENOMEM;
+    }
+
+    dp_req_with_reply(dp_cli, NULL, "HostID", key, sbus_req, DPT_HOSTID,
+                      DPM_HOSTID_HANDLER, dp_flags, data,
+                      dp_req_reply_std, struct dp_reply_std);
+
+    return ENOTSUP;
+}

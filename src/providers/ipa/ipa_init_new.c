@@ -850,8 +850,9 @@ errno_t sssm_ipa_hostid_init(TALLOC_CTX *mem_ctx,
     hostid_ctx->host_search_bases = init_ctx->options->host_search_bases;
     hostid_ctx->ipa_opts = init_ctx->options;
 
-    dp_set_method(dp_methods, DPM_HOSTID_HANDLER, NULL, NULL, hostid_ctx,
-                  struct ipa_hostid_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_HOSTID_HANDLER,
+                  ipa_hostid_handler_send, ipa_hostid_handler_recv, hostid_ctx,
+                  struct ipa_hostid_ctx, struct dp_hostid_data, struct dp_reply_std);
 
     return EOK;
 #else
