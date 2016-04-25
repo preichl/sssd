@@ -35,6 +35,10 @@ struct dp_hostid_data {
     const char *alias;
 };
 
+struct dp_autofs_data {
+    const char *mapname;
+};
+
 /* Reply private data. */
 
 struct dp_reply_std {

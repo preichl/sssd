@@ -608,21 +608,18 @@ done:
     return ret;
 }
 
-int sssm_ldap_autofs_init(struct be_ctx *be_ctx,
-                          struct bet_ops **ops,
-                          void **pvt_data)
+errno_t sssm_ldap_autofs_init(TALLOC_CTX *mem_ctx,
+                              struct be_ctx *be_ctx,
+                              void *module_data,
+                              struct dp_method *dp_methods)
 {
 #ifdef BUILD_AUTOFS
-    /* TODO fix when we can compile with this
-    struct sdap_id_ctx *id_ctx;
+    struct ldap_init_ctx *init_ctx;
 
     DEBUG(SSSDBG_TRACE_INTERNAL, "Initializing LDAP autofs handler\n");
+    init_ctx = talloc_get_type(module_data, struct ldap_init_ctx);
 
-    id_ctx = talloc_get_type(module_data, struct sdap_id_ctx);
-
-    return sdap_autofs_init(mem_ctx, be_ctx, id_ctx, dp_methods);
-    */
-    return ENOTSUP;
+    return sdap_autofs_init(mem_ctx, be_ctx, init_ctx->id_ctx, dp_methods);
 #else
     DEBUG(SSSDBG_MINOR_FAILURE, "Autofs init handler called but SSSD is "
                                  "built without autofs support, ignoring\n");
