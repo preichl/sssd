@@ -37,6 +37,11 @@
 #define EXOP_SID2NAME_OID "2.16.840.1.113730.3.8.10.4"
 #define EXOP_SID2NAME_V1_OID "2.16.840.1.113730.3.8.10.4.1"
 
+errno_t ipa_subdomains_init(TALLOC_CTX *mem_ctx,
+                            struct be_ctx *be_ctx,
+                            struct ipa_id_ctx *ipa_id_ctx,
+                            struct dp_method *dp_methods);
+
 struct be_ctx *ipa_get_subdomains_be_ctx(struct be_ctx *be_ctx);
 
 int ipa_subdom_init(struct be_ctx *be_ctx,

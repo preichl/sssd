@@ -608,24 +608,12 @@ errno_t sssm_ad_subdomains_init(TALLOC_CTX *mem_ctx,
                                 void *module_data,
                                 struct dp_method *dp_methods)
 {
-    /* TODO fix when we can compile with this
-    struct ad_id_ctx *id_ctx;
-    const char *ad_domain;
-    errno_t ret;
+    struct ad_init_ctx *init_ctx;
 
-    id_ctx = talloc_get_type(module_data, struct ad_id_ctx);
-    ad_domain = dp_opt_get_string(id_ctx->ad_options->basic, AD_DOMAIN);
+    DEBUG(SSSDBG_TRACE_INTERNAL, "Initializing AD subdomains handler\n");
+    init_ctx = talloc_get_type(module_data, struct ad_init_ctx);
 
-    ret = ad_subdom_init(mem_ctx, be_ctx, id_ctx, ad_domain, dp_methods);
-    if (ret != EOK) {
-        DEBUG(SSSDBG_CRIT_FAILURE, "ad_subdom_init() failed.\n");
-        return ret;
-    }
-
-    return EOK;
-    */
-
-    return ENOTSUP;
+    return ad_subdomains_init(mem_ctx, be_ctx, init_ctx->id_ctx, dp_methods);
 }
 
 errno_t sssm_ad_sudo_init(TALLOC_CTX *mem_ctx,

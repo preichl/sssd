@@ -886,22 +886,12 @@ errno_t sssm_ipa_subdomains_init(TALLOC_CTX *mem_ctx,
                                  void *module_data,
                                  struct dp_method *dp_methods)
 {
-    /* TODO fix when we can compile with this
-    struct ipa_id_ctx *id_ctx;
-    errno_t ret;
+    struct ipa_init_ctx *init_ctx;
 
-    id_ctx = talloc_get_type(module_data, struct ipa_id_ctx);
+    DEBUG(SSSDBG_TRACE_INTERNAL, "Initializing IPA subdomains handler\n");
+    init_ctx = talloc_get_type(module_data, struct ipa_init_ctx);
 
-    ret = ipa_subdom_init(mem_ctx, be_ctx, id_ctx, dp_methods);
-    if (ret != EOK) {
-        DEBUG(SSSDBG_CRIT_FAILURE, "ipa_subdom_init() failed.\n");
-        return ret;
-    }
-
-    return EOK;
-    */
-
-    return ENOTSUP;
+    return ipa_subdomains_init(mem_ctx, be_ctx, init_ctx->id_ctx, dp_methods);
 }
 
 errno_t sssm_ipa_sudo_init(TALLOC_CTX *mem_ctx,

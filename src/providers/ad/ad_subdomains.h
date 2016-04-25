@@ -28,6 +28,11 @@
 #include "providers/backend.h"
 #include "providers/ad/ad_common.h"
 
+errno_t ad_subdomains_init(TALLOC_CTX *mem_ctx,
+                           struct be_ctx *be_ctx,
+                           struct ad_id_ctx *ad_id_ctx,
+                           struct dp_method *dp_methods);
+
 int ad_subdom_init(struct be_ctx *be_ctx,
                    struct ad_id_ctx *id_ctx,
                    const char *ad_domain,
