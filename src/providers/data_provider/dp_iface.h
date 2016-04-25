@@ -39,4 +39,9 @@ errno_t dp_host_handler(struct sbus_request *sbus_req,
                         const char *name,
                         const char *alias);
 
+errno_t dp_autofs_handler(struct sbus_request *sbus_req,
+                          void *dp_cli,
+                          uint32_t dp_flags,
+                          const char *mapname);
+
 #endif /* DP_IFACE_H_ */

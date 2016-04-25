@@ -1268,6 +1268,7 @@ sssd_be_SOURCES = \
     src/providers/data_provider/dp_reply_std.c \
     src/providers/data_provider/dp_target_sudo.c \
     src/providers/data_provider/dp_target_hostid.c \
+    src/providers/data_provider/dp_target_autofs.c \
     $(SSSD_FAILOVER_OBJ)
 sssd_be_LDADD = \
     $(LIBADD_DL) \
