@@ -32,7 +32,7 @@ struct iface_dp iface_dp = {
     .sudoHandler = dp_sudo_handler,
     .autofsHandler = dp_autofs_handler,
     .hostHandler = dp_host_handler,
-    .getDomains = NULL,
+    .getDomains = dp_subdomains_handler,
     .getAccountInfo = NULL
 };
 

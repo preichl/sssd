@@ -39,6 +39,10 @@ struct dp_autofs_data {
     const char *mapname;
 };
 
+struct dp_subdomains_data {
+    const char *domain_hint;
+};
+
 /* Reply private data. */
 
 struct dp_reply_std {

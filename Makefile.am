@@ -1259,6 +1259,7 @@ sssd_be_SOURCES = \
     src/providers/data_provider/dp_target_sudo.c \
     src/providers/data_provider/dp_target_hostid.c \
     src/providers/data_provider/dp_target_autofs.c \
+    src/providers/data_provider/dp_target_subdomains.c \
     $(SSSD_FAILOVER_OBJ)
 sssd_be_LDADD = \
     $(LIBADD_DL) \

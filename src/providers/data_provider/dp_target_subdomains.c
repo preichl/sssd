@@ -18,34 +18,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef DP_IFACE_H_
-#define DP_IFACE_H_
+#include <talloc.h>
+#include <tevent.h>
 
 #include "sbus/sssd_dbus.h"
 #include "providers/data_provider/dp_private.h"
-#include "providers/data_provider/dp.h"
-
-#define DP_PATH "/org/freedesktop/sssd/dataprovider"
-
-errno_t dp_register_sbus_interface(struct sbus_connection *conn,
-                                   struct dp_client *pvt);
-
-errno_t dp_sudo_handler(struct sbus_request *sbus_req, void *dp_cli);
-
-errno_t dp_host_handler(struct sbus_request *sbus_req,
-                        void *dp_cli,
-                        uint32_t dp_flags,
-                        const char *name,
-                        const char *alias);
-
-errno_t dp_autofs_handler(struct sbus_request *sbus_req,
-                          void *dp_cli,
-                          uint32_t dp_flags,
-                          const char *mapname);
+#include "providers/data_provider/dp_iface.h"
+#include "providers/backend.h"
+#include "util/util.h"
 
 errno_t dp_subdomains_handler(struct sbus_request *sbus_req,
                               void *dp_cli,
                               uint32_t dp_flags,
-                              const char *domain_hint);
+                              const char *domain_hint)
+{
+    struct dp_subdomains_data *data;
+    const char *key;
 
-#endif /* DP_IFACE_H_ */
+    data = talloc_zero(sbus_req, struct dp_subdomains_data);
+    if (data == NULL) {
+        return ENOMEM;
+    }
+
+    data->domain_hint = domain_hint;
+    key = domain_hint == NULL ? "<ALL>" : domain_hint;
+
+    dp_req_with_reply(dp_cli, NULL, "Subdomains", key, sbus_req, DPT_SUBDOMAINS,
+                      DPM_DOMAINS_HANDLER, dp_flags, data,
+                      dp_req_reply_std, struct dp_reply_std);
+
+    return ENOTSUP;
+}
