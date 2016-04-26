@@ -78,6 +78,16 @@ struct sdap_auth_ctx {
     struct sdap_service *chpass_service;
 };
 
+struct tevent_req *
+sdap_online_check_handler_send(TALLOC_CTX *mem_ctx,
+                               struct sdap_id_ctx *id_ctx,
+                               void *data,
+                               struct dp_req_params *params);
+
+errno_t sdap_online_check_handler_recv(TALLOC_CTX *mem_ctx,
+                                       struct tevent_req *req,
+                                       struct dp_reply_std *data);
+
 void sdap_check_online(struct be_req *breq);
 void sdap_do_online_check(struct be_req *be_req, struct sdap_id_ctx *ctx);
 
@@ -88,6 +98,16 @@ struct tevent_req* sdap_reinit_cleanup_send(TALLOC_CTX *mem_ctx,
 errno_t sdap_reinit_cleanup_recv(struct tevent_req *req);
 
 /* id */
+struct tevent_req *
+sdap_account_info_handler_send(TALLOC_CTX *mem_ctx,
+                               struct sdap_id_ctx *id_ctx,
+                               struct be_acct_req *data,
+                               struct dp_req_params *params);
+
+errno_t sdap_account_info_handler_recv(TALLOC_CTX *mem_ctx,
+                                       struct tevent_req *req,
+                                       struct dp_reply_std *data);
+
 void sdap_account_info_handler(struct be_req *breq);
 void sdap_handle_account_info(struct be_req *breq, struct sdap_id_ctx *ctx,
                               struct sdap_id_conn_ctx *conn);

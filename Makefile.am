@@ -1260,6 +1260,7 @@ sssd_be_SOURCES = \
     src/providers/data_provider/dp_target_hostid.c \
     src/providers/data_provider/dp_target_autofs.c \
     src/providers/data_provider/dp_target_subdomains.c \
+    src/providers/data_provider/dp_target_id.c \
     $(SSSD_FAILOVER_OBJ)
 sssd_be_LDADD = \
     $(LIBADD_DL) \
@@ -2943,6 +2944,7 @@ libsss_ldap_common_la_SOURCES = \
     src/providers/ldap/sdap_async_connection.c \
     src/providers/ldap/sdap_async_netgroups.c \
     src/providers/ldap/sdap_async_services.c \
+    src/providers/ldap/sdap_online_check.c \
     src/providers/ldap/sdap_ad_groups.c \
     src/providers/ldap/sdap_child_helpers.c \
     src/providers/ldap/sdap_fd_events.c \

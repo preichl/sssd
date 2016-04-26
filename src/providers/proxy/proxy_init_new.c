@@ -327,8 +327,9 @@ errno_t sssm_proxy_id_init(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    dp_set_method(dp_methods, DPM_ACCOUNT_HANDLER, NULL, NULL, ctx,
-                  struct proxy_id_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_ACCOUNT_HANDLER,
+                  proxy_account_info_handler_send, proxy_account_info_handler_recv, ctx,
+                  struct proxy_id_ctx, struct be_acct_req, struct dp_reply_std);
 
     ret = EOK;
 
