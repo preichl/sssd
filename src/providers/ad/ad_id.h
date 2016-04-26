@@ -23,6 +23,16 @@
 #ifndef AD_ID_H_
 #define AD_ID_H_
 
+struct tevent_req *
+ad_account_info_handler_send(TALLOC_CTX *mem_ctx,
+                              struct ad_id_ctx *id_ctx,
+                              struct be_acct_req *data,
+                              struct dp_req_params *params);
+
+errno_t ad_account_info_handler_recv(TALLOC_CTX *mem_ctx,
+                                      struct tevent_req *req,
+                                      struct dp_reply_std *data);
+
 void
 ad_account_info_handler(struct be_req *breq);
 

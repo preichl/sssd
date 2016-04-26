@@ -521,7 +521,12 @@ errno_t sssm_ldap_id_init(TALLOC_CTX *mem_ctx,
     init_ctx = talloc_get_type(module_data, struct ldap_init_ctx);
     id_ctx = init_ctx->id_ctx;
 
-    dp_set_method(dp_methods, DPM_ACCOUNT_HANDLER, NULL, NULL, id_ctx,
+    dp_set_method(dp_methods, DPM_ACCOUNT_HANDLER,
+                  sdap_account_info_handler_send, sdap_account_info_handler_recv, id_ctx,
+                  struct sdap_id_ctx, struct be_acct_req, struct dp_reply_std);
+
+    dp_set_method(dp_methods, DPM_CHECK_ONLINE,
+                  sdap_online_check_handler_send, sdap_online_check_handler_recv, id_ctx,
                   struct sdap_id_ctx, void, struct dp_reply_std);
 
     return EOK;

@@ -33,7 +33,7 @@ struct iface_dp iface_dp = {
     .autofsHandler = dp_autofs_handler,
     .hostHandler = dp_host_handler,
     .getDomains = dp_subdomains_handler,
-    .getAccountInfo = NULL
+    .getAccountInfo = dp_get_account_info_handler
 };
 
 static struct sbus_iface_map dp_map[] = {
