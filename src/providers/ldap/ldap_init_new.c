@@ -543,8 +543,9 @@ errno_t sssm_ldap_auth_init(TALLOC_CTX *mem_ctx,
     init_ctx = talloc_get_type(module_data, struct ldap_init_ctx);
     auth_ctx = init_ctx->auth_ctx;
 
-    dp_set_method(dp_methods, DPM_AUTH_HANDLER, NULL, NULL, auth_ctx,
-                  struct sdap_auth_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_AUTH_HANDLER,
+                  sdap_pam_auth_handler_send, sdap_pam_auth_handler_recv, auth_ctx,
+                  struct sdap_auth_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
 }
@@ -569,8 +570,9 @@ errno_t sssm_ldap_chpass_init(TALLOC_CTX *mem_ctx,
         return ret;
     }
 
-    dp_set_method(dp_methods, DPM_AUTH_HANDLER, NULL, NULL, auth_ctx,
-                  struct sdap_auth_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_AUTH_HANDLER,
+                  sdap_pam_chpass_handler_send, sdap_pam_chpass_handler_recv, auth_ctx,
+                  struct sdap_auth_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
 }
@@ -602,8 +604,9 @@ errno_t sssm_ldap_access_init(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    dp_set_method(dp_methods, DPM_ACCESS_HANDLER, NULL, NULL, access_ctx,
-                  struct sdap_access_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_ACCESS_HANDLER,
+                  sdap_pam_access_handler_send, sdap_pam_access_handler_recv, access_ctx,
+                  struct sdap_access_ctx, struct pam_data, struct pam_data *);
 
     ret = EOK;
 

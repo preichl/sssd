@@ -137,14 +137,43 @@ sdap_handle_acct_req_recv(struct tevent_req *req,
                           int *_dp_error, const char **_err,
                           int *sdap_ret);
 
+struct tevent_req *
+sdap_pam_auth_handler_send(TALLOC_CTX *mem_ctx,
+                           struct sdap_auth_ctx *auth_ctx,
+                           struct pam_data *pd,
+                           struct dp_req_params *params);
+
+errno_t
+sdap_pam_auth_handler_recv(TALLOC_CTX *mem_ctx,
+                             struct tevent_req *req,
+                             struct pam_data **_data);
+
+struct tevent_req *
+sdap_pam_chpass_handler_send(TALLOC_CTX *mem_ctx,
+                           struct sdap_auth_ctx *auth_ctx,
+                           struct pam_data *pd,
+                           struct dp_req_params *params);
+
+errno_t
+sdap_pam_chpass_handler_recv(TALLOC_CTX *mem_ctx,
+                             struct tevent_req *req,
+                             struct pam_data **_data);
+
+/* access */
+void sdap_pam_access_handler(struct be_req *breq);
+
 /* auth */
 void sdap_pam_auth_handler(struct be_req *breq);
 
 /* chpass */
 void sdap_pam_chpass_handler(struct be_req *breq);
 
-/* access */
-void sdap_pam_access_handler(struct be_req *breq);
+/* autofs */
+struct tevent_req *
+sdap_autofs_handler_send(TALLOC_CTX *mem_ctx,
+                         struct sdap_id_ctx *id_ctx,
+                         struct dp_autofs_data *data,
+                         struct dp_req_params *params);
 
 /* autofs */
 void sdap_autofs_handler(struct be_req *breq);

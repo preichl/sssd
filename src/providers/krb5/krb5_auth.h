@@ -63,6 +63,17 @@ errno_t krb5_setup(TALLOC_CTX *mem_ctx, struct pam_data *pd,
                    struct krb5_ctx *krb5_ctx, bool case_sensitive,
                    struct krb5child_req **krb5_req);
 
+struct tevent_req *
+krb5_pam_handler_send(TALLOC_CTX *mem_ctx,
+                      struct krb5_ctx *krb5_ctx,
+                      struct pam_data *pd,
+                      struct dp_req_params *params);
+
+errno_t
+krb5_pam_handler_recv(TALLOC_CTX *mem_ctx,
+                      struct tevent_req *req,
+                      struct pam_data **_data);
+
 void krb5_pam_handler(struct be_req *be_req);
 void krb5_pam_handler_auth_done(struct tevent_req *req);
 

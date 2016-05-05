@@ -351,7 +351,7 @@ errno_t sssm_proxy_auth_init(TALLOC_CTX *mem_ctx,
     auth_ctx = talloc_get_type(module_data, struct proxy_auth_ctx);
 
     dp_set_method(dp_methods, DPM_AUTH_HANDLER, NULL, NULL, auth_ctx,
-                  struct proxy_auth_ctx, void, struct dp_reply_std);
+                  struct proxy_auth_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
 }

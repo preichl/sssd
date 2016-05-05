@@ -734,8 +734,9 @@ errno_t sssm_ipa_auth_init(TALLOC_CTX *mem_ctx,
     init_ctx = talloc_get_type(module_data, struct ipa_init_ctx);
     auth_ctx = init_ctx->auth_ctx;
 
-    dp_set_method(dp_methods, DPM_AUTH_HANDLER, NULL, NULL, auth_ctx,
-                  struct ipa_auth_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_AUTH_HANDLER,
+                  ipa_pam_auth_handler_send, ipa_pam_auth_handler_recv, auth_ctx,
+                  struct ipa_auth_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
 }
@@ -792,8 +793,9 @@ errno_t sssm_ipa_access_init(TALLOC_CTX *mem_ctx,
     access_ctx->sdap_access_ctx->access_rule[0] = LDAP_ACCESS_EXPIRE;
     access_ctx->sdap_access_ctx->access_rule[1] = LDAP_ACCESS_EMPTY;
 
-    dp_set_method(dp_methods, DPM_ACCESS_HANDLER, NULL, NULL, access_ctx,
-                  struct ipa_access_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_ACCESS_HANDLER,
+                  ipa_pam_access_handler_send, ipa_pam_access_handler_recv, access_ctx,
+                  struct ipa_access_ctx, struct pam_data, struct pam_data *);
 
     ret = EOK;
 
@@ -810,6 +812,7 @@ errno_t sssm_ipa_selinux_init(TALLOC_CTX *mem_ctx,
                               void *module_data,
                               struct dp_method *dp_methods)
 {
+#if defined HAVE_SELINUX && defined HAVE_SELINUX_LOGIN_DIR
     struct ipa_selinux_ctx *selinux_ctx;
     struct ipa_init_ctx *init_ctx;
     struct ipa_options *opts;
@@ -828,10 +831,16 @@ errno_t sssm_ipa_selinux_init(TALLOC_CTX *mem_ctx,
     selinux_ctx->host_search_bases = opts->host_search_bases;
     selinux_ctx->selinux_search_bases = opts->selinux_search_bases;
 
-    dp_set_method(dp_methods, DPM_SELINUX_HANDLER, NULL, NULL, selinux_ctx,
-                  struct ipa_selinux_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_SELINUX_HANDLER,
+                  ipa_selinux_handler_send, ipa_selinux_handler_recv, selinux_ctx,
+                  struct ipa_selinux_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
+#else
+    DEBUG(SSSDBG_MINOR_FAILURE, "SELinux init handler called but SSSD is "
+                                "built without SSH support, ignoring\n");
+    return EOK;
+#endif
 }
 
 errno_t sssm_ipa_hostid_init(TALLOC_CTX *mem_ctx,

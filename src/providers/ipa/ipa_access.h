@@ -74,6 +74,17 @@ struct hbac_ctx {
     struct sysdb_attrs **servicegroups;
 };
 
+struct tevent_req *
+ipa_pam_access_handler_send(TALLOC_CTX *mem_ctx,
+                           struct ipa_access_ctx *access_ctx,
+                           struct pam_data *pd,
+                           struct dp_req_params *params);
+
+errno_t
+ipa_pam_access_handler_recv(TALLOC_CTX *mem_ctx,
+                             struct tevent_req *req,
+                             struct pam_data **_data);
+
 void ipa_access_handler(struct be_req *be_req);
 
 errno_t hbac_get_cached_rules(TALLOC_CTX *mem_ctx,

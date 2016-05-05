@@ -30,6 +30,7 @@
 #include "providers/krb5/krb5_auth.h"
 #include "providers/krb5/krb5_common.h"
 #include "providers/krb5/krb5_init_shared.h"
+#include "providers/data_provider.h"
 
 static errno_t krb5_init_kpasswd(struct krb5_ctx *ctx,
                                  struct be_ctx *be_ctx)
@@ -199,8 +200,9 @@ errno_t sssm_krb5_auth_init(TALLOC_CTX *mem_ctx,
     struct krb5_ctx *ctx;
 
     ctx = talloc_get_type(module_data, struct krb5_ctx);
-    dp_set_method(dp_methods, DPM_AUTH_HANDLER, NULL, NULL, ctx,
-                  struct krb5_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_AUTH_HANDLER,
+                  krb5_pam_handler_send, krb5_pam_handler_recv, ctx,
+                  struct krb5_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
 }

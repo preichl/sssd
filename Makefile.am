@@ -1271,6 +1271,7 @@ sssd_be_SOURCES = \
     src/providers/data_provider/dp_target_autofs.c \
     src/providers/data_provider/dp_target_subdomains.c \
     src/providers/data_provider/dp_target_id.c \
+    src/providers/data_provider/dp_target_auth.c \
     $(SSSD_FAILOVER_OBJ)
 sssd_be_LDADD = \
     $(LIBADD_DL) \
@@ -3045,7 +3046,7 @@ libsss_krb5_common_la_SOURCES = \
     src/providers/krb5/krb5_wait_queue.c \
     src/providers/krb5/krb5_common.c \
     src/providers/krb5/krb5_opts.c \
-    src/providers/krb5/krb5_auth.c \
+    src/providers/krb5/krb5_auth_new.c \
     src/providers/krb5/krb5_access.c \
     src/providers/krb5/krb5_child_handler.c \
     src/providers/krb5/krb5_init_shared.c \
@@ -3085,7 +3086,7 @@ libsss_proxy_la_SOURCES = \
     src/providers/proxy/proxy_id.c \
     src/providers/proxy/proxy_netgroup.c \
     src/providers/proxy/proxy_services.c \
-    src/providers/proxy/proxy_auth.c \
+    src/providers/proxy/proxy_auth_new.c \
     src/providers/data_provider_iface_generated.c \
     $(NULL)
 libsss_proxy_la_CFLAGS = \

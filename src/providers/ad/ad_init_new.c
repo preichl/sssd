@@ -522,8 +522,9 @@ errno_t sssm_ad_auth_init(TALLOC_CTX *mem_ctx,
     init_ctx = talloc_get_type(module_data, struct ad_init_ctx);
     auth_ctx = init_ctx->auth_ctx;
 
-    dp_set_method(dp_methods, DPM_AUTH_HANDLER, NULL, NULL, auth_ctx,
-                  struct krb5_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_AUTH_HANDLER,
+                  krb5_pam_handler_send, krb5_pam_handler_recv, auth_ctx,
+                  struct krb5_ctx, struct pam_data, struct pam_data *);
 
     return EOK;
 }
@@ -576,8 +577,9 @@ errno_t sssm_ad_access_init(TALLOC_CTX *mem_ctx,
         goto done;
     }
 
-    dp_set_method(dp_methods, DPM_ACCESS_HANDLER, NULL, NULL, access_ctx,
-                  struct ad_access_ctx, void, struct dp_reply_std);
+    dp_set_method(dp_methods, DPM_ACCESS_HANDLER,
+                  ad_pam_access_handler_send, ad_pam_access_handler_recv, access_ctx,
+                  struct ad_access_ctx, struct pam_data, struct pam_data *);
 
     ret = EOK;
 

@@ -26,6 +26,18 @@
 #define _IPA_AUTH_H_
 
 #include "providers/backend.h"
+#include "providers/ipa/ipa_common.h"
+
+struct tevent_req *
+ipa_pam_auth_handler_send(TALLOC_CTX *mem_ctx,
+                          struct ipa_auth_ctx *auth_ctx,
+                          struct pam_data *pd,
+                          struct dp_req_params *params);
+
+errno_t
+ipa_pam_auth_handler_recv(TALLOC_CTX *mem_ctx,
+                             struct tevent_req *req,
+                             struct pam_data **_data);
 
 void ipa_auth(struct be_req *be_req);
 

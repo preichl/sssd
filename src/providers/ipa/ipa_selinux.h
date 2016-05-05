@@ -43,6 +43,17 @@ struct ipa_selinux_ctx {
     struct sdap_search_base **hbac_search_bases;
 };
 
+struct tevent_req *
+ipa_selinux_handler_send(TALLOC_CTX *mem_ctx,
+                         struct ipa_selinux_ctx *selinux_ctx,
+                         struct pam_data *pd,
+                         struct dp_req_params *params);
+
+errno_t
+ipa_selinux_handler_recv(TALLOC_CTX *mem_ctx,
+                         struct tevent_req *req,
+                         struct pam_data **_data);
+
 void ipa_selinux_handler(struct be_req *be_req);
 
 #endif
