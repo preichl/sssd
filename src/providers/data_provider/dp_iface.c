@@ -28,7 +28,7 @@
 
 struct iface_dp iface_dp = {
     {&iface_dp_meta, 0},
-    .pamHandler = NULL,
+    .pamHandler = dp_pam_handler,
     .sudoHandler = dp_sudo_handler,
     .autofsHandler = dp_autofs_handler,
     .hostHandler = dp_host_handler,

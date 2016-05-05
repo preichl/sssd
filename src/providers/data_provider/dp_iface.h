@@ -39,6 +39,8 @@ errno_t dp_get_account_info_handler(struct sbus_request *sbus_req,
                                     const char *domain,
                                     const char *extra);
 
+errno_t dp_pam_handler(struct sbus_request *sbus_req, void *dp_cli);
+
 errno_t dp_sudo_handler(struct sbus_request *sbus_req, void *dp_cli);
 
 errno_t dp_host_handler(struct sbus_request *sbus_req,
