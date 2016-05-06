@@ -1747,6 +1747,10 @@ simple_access_tests_SOURCES = \
     src/providers/simple/simple_access.c \
     src/providers/simple/simple_access_check.c \
     $(NULL)
+simple_access_tests_CFLAGS = \
+    $(AM_CFLAGS) \
+    $(CHECK_CFLAGS) \
+    -DUNIT_TESTING
 simple_access_tests_LDADD = \
     $(LIBADD_DL) \
     $(CHECK_LIBS) \
