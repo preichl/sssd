@@ -42,13 +42,6 @@ errno_t ipa_subdomains_init(TALLOC_CTX *mem_ctx,
                             struct ipa_id_ctx *ipa_id_ctx,
                             struct dp_method *dp_methods);
 
-struct be_ctx *ipa_get_subdomains_be_ctx(struct be_ctx *be_ctx);
-
-int ipa_subdom_init(struct be_ctx *be_ctx,
-                    struct ipa_id_ctx *id_ctx,
-                    struct bet_ops **ops,
-                    void **pvt_data);
-
 /* The following are used in server mode only */
 struct ipa_ad_server_ctx {
     struct sss_domain_info *dom;

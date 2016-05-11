@@ -74,9 +74,6 @@ krb5_pam_handler_recv(TALLOC_CTX *mem_ctx,
                       struct tevent_req *req,
                       struct pam_data **_data);
 
-void krb5_pam_handler(struct be_req *be_req);
-void krb5_pam_handler_auth_done(struct tevent_req *req);
-
 /* Please use krb5_auth_send/recv *only* if you're certain there can't
  * be concurrent logins happening. With some ccache back ends, the ccache
  * files might clobber one another. Please use krb5_auth_queue_send()

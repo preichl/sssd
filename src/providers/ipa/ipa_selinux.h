@@ -54,6 +54,4 @@ ipa_selinux_handler_recv(TALLOC_CTX *mem_ctx,
                          struct tevent_req *req,
                          struct pam_data **_data);
 
-void ipa_selinux_handler(struct be_req *be_req);
-
 #endif

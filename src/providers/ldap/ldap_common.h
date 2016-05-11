@@ -88,9 +88,6 @@ errno_t sdap_online_check_handler_recv(TALLOC_CTX *mem_ctx,
                                        struct tevent_req *req,
                                        struct dp_reply_std *data);
 
-void sdap_check_online(struct be_req *breq);
-void sdap_do_online_check(struct be_req *be_req, struct sdap_id_ctx *ctx);
-
 struct tevent_req* sdap_reinit_cleanup_send(TALLOC_CTX *mem_ctx,
                                             struct be_ctx *be_ctx,
                                             struct sdap_id_ctx *id_ctx);
@@ -107,10 +104,6 @@ sdap_account_info_handler_send(TALLOC_CTX *mem_ctx,
 errno_t sdap_account_info_handler_recv(TALLOC_CTX *mem_ctx,
                                        struct tevent_req *req,
                                        struct dp_reply_std *data);
-
-void sdap_account_info_handler(struct be_req *breq);
-void sdap_handle_account_info(struct be_req *breq, struct sdap_id_ctx *ctx,
-                              struct sdap_id_conn_ctx *conn);
 
 /* Set up enumeration and/or cleanup */
 int ldap_id_setup_tasks(struct sdap_id_ctx *ctx);
@@ -159,15 +152,6 @@ sdap_pam_chpass_handler_recv(TALLOC_CTX *mem_ctx,
                              struct tevent_req *req,
                              struct pam_data **_data);
 
-/* access */
-void sdap_pam_access_handler(struct be_req *breq);
-
-/* auth */
-void sdap_pam_auth_handler(struct be_req *breq);
-
-/* chpass */
-void sdap_pam_chpass_handler(struct be_req *breq);
-
 /* autofs */
 struct tevent_req *
 sdap_autofs_handler_send(TALLOC_CTX *mem_ctx,
@@ -175,8 +159,10 @@ sdap_autofs_handler_send(TALLOC_CTX *mem_ctx,
                          struct dp_autofs_data *data,
                          struct dp_req_params *params);
 
-/* autofs */
-void sdap_autofs_handler(struct be_req *breq);
+errno_t
+sdap_autofs_handler_recv(TALLOC_CTX *mem_ctx,
+                         struct tevent_req *req,
+                         struct dp_reply_std *data);
 
 void sdap_handler_done(struct be_req *req, int dp_err,
                        int error, const char *errstr);

@@ -666,6 +666,7 @@ dist_noinst_HEADERS = \
     src/providers/ipa/ipa_dn.h \
     src/providers/ipa/ipa_sudo.h \
     src/providers/ad/ad_srv.h \
+    src/providers/ad/ad_subdomains.h \
     src/providers/proxy/proxy.h \
     src/tools/tools_util.h \
     src/tools/sss_sync_ops.h \
@@ -1744,7 +1745,7 @@ ad_ldap_opt_tests_LDADD = \
 
 simple_access_tests_SOURCES = \
     src/tests/simple_access-tests.c \
-    src/providers/simple/simple_access.c \
+    src/providers/simple/simple_access_new.c \
     src/providers/simple/simple_access_check.c \
     $(NULL)
 simple_access_tests_CFLAGS = \
@@ -2972,13 +2973,13 @@ endif
 pkglib_LTLIBRARIES += libsss_krb5_common.la
 pkglib_LTLIBRARIES += libsss_ldap_common.la
 libsss_ldap_common_la_SOURCES = \
-    src/providers/ldap/ldap_id.c \
+    src/providers/ldap/ldap_id_new.c \
     src/providers/ldap/ldap_id_enum.c \
     src/providers/ldap/sdap_async_enum.c \
     src/providers/ldap/ldap_id_cleanup.c \
     src/providers/ldap/ldap_id_netgroup.c \
     src/providers/ldap/ldap_id_services.c \
-    src/providers/ldap/ldap_auth.c \
+    src/providers/ldap/ldap_auth_new.c \
     src/providers/ldap/ldap_common.c \
     src/providers/ldap/ldap_options.c \
     src/providers/ldap/ldap_opts.c \
@@ -3034,12 +3035,12 @@ libsss_ldap_common_la_SOURCES += \
     src/providers/ldap/sdap_async_sudo_hostinfo.c \
     src/providers/ldap/sdap_sudo_refresh.c \
     src/providers/ldap/sdap_sudo_shared.c \
-    src/providers/ldap/sdap_sudo.c
+    src/providers/ldap/sdap_sudo_new.c
 endif
 
 if BUILD_AUTOFS
 libsss_ldap_common_la_SOURCES += \
-    src/providers/ldap/sdap_autofs.c \
+    src/providers/ldap/sdap_autofs_new.c \
     src/providers/ldap/sdap_async_autofs.c
 endif
 
@@ -3069,8 +3070,8 @@ libsss_krb5_common_la_LDFLAGS = \
     -avoid-version
 
 libsss_ldap_la_SOURCES = \
-    src/providers/ldap/ldap_init.c \
-    src/providers/ldap/ldap_access.c
+    src/providers/ldap/ldap_init_new.c \
+    src/providers/ldap/ldap_access_new.c
 libsss_ldap_la_CFLAGS = \
     $(AM_CFLAGS) \
     $(OPENLDAP_CFLAGS)
@@ -3085,9 +3086,9 @@ libsss_ldap_la_LDFLAGS = \
 
 
 libsss_proxy_la_SOURCES = \
-    src/providers/proxy/proxy_init.c \
+    src/providers/proxy/proxy_init_new.c \
     src/providers/proxy/proxy_client.c \
-    src/providers/proxy/proxy_id.c \
+    src/providers/proxy/proxy_id_new.c \
     src/providers/proxy/proxy_netgroup.c \
     src/providers/proxy/proxy_services.c \
     src/providers/proxy/proxy_auth_new.c \
@@ -3103,7 +3104,7 @@ libsss_proxy_la_LDFLAGS = \
 
 libsss_simple_la_SOURCES = \
     src/providers/simple/simple_access_check.c \
-    src/providers/simple/simple_access.c
+    src/providers/simple/simple_access_new.c
 libsss_simple_la_CFLAGS = \
     $(AM_CFLAGS)
 libsss_simple_la_LDFLAGS = \
@@ -3111,7 +3112,7 @@ libsss_simple_la_LDFLAGS = \
     -module
 
 libsss_krb5_la_SOURCES = \
-    src/providers/krb5/krb5_init.c
+    src/providers/krb5/krb5_init_new.c
 libsss_krb5_la_CFLAGS = \
     $(AM_CFLAGS) \
     $(DHASH_CFLAGS) \
@@ -3126,18 +3127,18 @@ libsss_krb5_la_LDFLAGS = \
     -module
 
 libsss_ipa_la_SOURCES = \
-    src/providers/ipa/ipa_init.c \
+    src/providers/ipa/ipa_init_new.c \
     src/providers/ipa/ipa_opts.c \
     src/providers/ipa/ipa_common.c \
     src/providers/ipa/ipa_config.c \
-    src/providers/ipa/ipa_id.c \
+    src/providers/ipa/ipa_id_new.c \
     src/providers/ipa/ipa_netgroups.c \
-    src/providers/ipa/ipa_auth.c \
-    src/providers/ipa/ipa_access.c \
+    src/providers/ipa/ipa_auth_new.c \
+    src/providers/ipa/ipa_access_new.c \
     src/providers/ipa/ipa_dyndns.c \
     src/providers/ipa/ipa_hosts.c \
-    src/providers/ipa/ipa_subdomains.c \
-    src/providers/ipa/ipa_subdomains_id.c \
+    src/providers/ipa/ipa_subdomains_new.c \
+    src/providers/ipa/ipa_subdomains_id_new.c \
     src/providers/ipa/ipa_subdomains_server.c \
     src/providers/ipa/ipa_subdomains_utils.c \
     src/providers/ipa/ipa_subdomains_ext_groups.c \
@@ -3151,8 +3152,6 @@ libsss_ipa_la_SOURCES = \
     src/providers/ipa/ipa_hbac_services.c \
     src/providers/ipa/ipa_hbac_users.c \
     src/providers/ipa/ipa_hbac_common.c \
-    src/providers/ipa/ipa_selinux.c \
-    src/providers/ipa/ipa_selinux_maps.c \
     src/providers/ipa/ipa_srv.c \
     src/providers/ipa/ipa_idmap.c \
     src/providers/ipa/ipa_dn.c \
@@ -3160,7 +3159,7 @@ libsss_ipa_la_SOURCES = \
     src/providers/ad/ad_common.c \
     src/providers/ad/ad_common.h \
     src/providers/ad/ad_dyndns.c \
-    src/providers/ad/ad_id.c \
+    src/providers/ad/ad_id_new.c \
     src/providers/ad/ad_pac.c \
     src/providers/ad/ad_pac_common.c \
     src/providers/ad/ad_pac.h \
@@ -3192,19 +3191,25 @@ libsss_ipa_la_LDFLAGS = \
     -module
 if BUILD_AUTOFS
 libsss_ipa_la_SOURCES += \
-    src/providers/ipa/ipa_autofs.c
+    src/providers/ipa/ipa_autofs_new.c
 endif
 
 if BUILD_SUDO
 libsss_ipa_la_SOURCES += \
-    src/providers/ipa/ipa_sudo.c \
+    src/providers/ipa/ipa_sudo_new.c \
     src/providers/ipa/ipa_sudo_refresh.c \
     src/providers/ipa/ipa_sudo_conversion.c \
     src/providers/ipa/ipa_sudo_async.c
 endif
 
+if BUILD_SEMANAGE
+libsss_ipa_la_SOURCES += \
+    src/providers/ipa/ipa_selinux_new.c \
+    src/providers/ipa/ipa_selinux_maps.c
+endif
+
 if BUILD_SSH
-libsss_ipa_la_SOURCES += src/providers/ipa/ipa_hostid.c
+libsss_ipa_la_SOURCES += src/providers/ipa/ipa_hostid_new.c
 endif
 
 
@@ -3212,34 +3217,33 @@ libsss_ad_la_SOURCES = \
     src/providers/ad/ad_opts.c \
     src/providers/ad/ad_common.c \
     src/providers/ad/ad_common.h \
-    src/providers/ad/ad_init.c \
+    src/providers/ad/ad_init_new.c \
     src/providers/ad/ad_dyndns.c \
     src/providers/ad/ad_machine_pw_renewal.c \
-    src/providers/ad/ad_id.c \
+    src/providers/ad/ad_id_new.c \
     src/providers/ad/ad_pac.c \
     src/providers/ad/ad_pac_common.c \
     src/providers/ad/ad_pac.h \
     src/providers/ad/ad_id.h \
-    src/providers/ad/ad_access.c \
+    src/providers/ad/ad_access_new.c \
     src/providers/ad/ad_access.h \
     src/providers/ad/ad_gpo.c \
     src/providers/ad/ad_gpo.h \
     src/providers/ad/ad_gpo_ndr.c \
     src/providers/ad/ad_opts.h \
     src/providers/ad/ad_srv.c \
-    src/providers/ad/ad_subdomains.c \
-    src/providers/ad/ad_subdomains.h \
+    src/providers/ad/ad_subdomains_new.c \
     src/providers/ad/ad_domain_info.c \
     src/providers/ad/ad_domain_info.h
 
 if BUILD_SUDO
 libsss_ad_la_SOURCES += \
-    src/providers/ad/ad_sudo.c
+    src/providers/ad/ad_sudo_new.c
 endif
 
 if BUILD_AUTOFS
 libsss_ad_la_SOURCES += \
-    src/providers/ad/ad_autofs.c
+    src/providers/ad/ad_autofs_new.c
 endif
 
 libsss_ad_la_CFLAGS = \

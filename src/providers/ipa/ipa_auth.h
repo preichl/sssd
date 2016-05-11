@@ -39,6 +39,4 @@ ipa_pam_auth_handler_recv(TALLOC_CTX *mem_ctx,
                              struct tevent_req *req,
                              struct pam_data **_data);
 
-void ipa_auth(struct be_req *be_req);
-
 #endif /* _IPA_AUTH_H_ */

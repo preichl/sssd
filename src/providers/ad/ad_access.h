@@ -60,7 +60,4 @@ ad_pam_access_handler_recv(TALLOC_CTX *mem_ctx,
                              struct tevent_req *req,
                              struct pam_data **_data);
 
-void
-ad_access_handler(struct be_req *breq);
-
 #endif /* AD_ACCESS_H_ */
