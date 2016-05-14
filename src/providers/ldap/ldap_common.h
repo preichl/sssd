@@ -164,9 +164,6 @@ sdap_autofs_handler_recv(TALLOC_CTX *mem_ctx,
                          struct tevent_req *req,
                          struct dp_reply_std *data);
 
-void sdap_handler_done(struct be_req *req, int dp_err,
-                       int error, const char *errstr);
-
 int sdap_service_init(TALLOC_CTX *memctx, struct be_ctx *ctx,
                       const char *service_name, const char *dns_service_name,
                       const char *urls, const char *backup_urls,

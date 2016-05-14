@@ -30,7 +30,7 @@
 #include <arpa/inet.h>
 
 /* In order to access opaque types */
-#include "providers/ad/ad_access.c"
+#include "providers/ad/ad_access_new.c"
 
 #include "tests/cmocka/common_mock.h"
 
