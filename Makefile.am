@@ -462,6 +462,7 @@ SSSD_RESPONDER_OBJ = \
     src/responder/common/responder_get_domains.c \
     src/responder/common/responder_utils.c \
     src/responder/common/responder_cache_req.c \
+    src/responder/common/data_provider/rdp_calls_client.c \
     src/monitor/monitor_iface_generated.c \
     src/providers/data_provider_iface_generated.c \
     src/providers/data_provider_req.c
@@ -571,6 +572,7 @@ dist_noinst_HEADERS = \
     src/responder/common/responder_packet.h \
     src/responder/common/responder_sbus.h \
     src/responder/common/responder_cache_req.h \
+    src/responder/common/data_provider/rdp_calls.h \
     src/responder/pam/pamsrv.h \
     src/responder/pam/pam_helpers.h \
     src/responder/nss/nsssrv.h \
@@ -1837,7 +1839,8 @@ responder_socket_access_tests_SOURCES = \
     src/responder/common/negcache.c \
     src/responder/common/responder_common.c \
     src/responder/common/responder_packet.c \
-    src/responder/common/responder_cmd.c
+    src/responder/common/responder_cmd.c \
+    src/responder/common/data_provider/rdp_calls_client.c
 responder_socket_access_tests_CFLAGS = \
     $(AM_CFLAGS) \
     $(CHECK_CFLAGS)
@@ -1933,6 +1936,7 @@ TEST_MOCK_RESP_OBJ = \
      src/responder/common/responder_cmd.c \
      src/responder/common/negcache.c \
      src/responder/common/responder_common.c \
+     src/responder/common/data_provider/rdp_calls_client.c \
      src/responder/common/responder_cache_req.c
 
 TEST_MOCK_PROVIDER_OBJ = \

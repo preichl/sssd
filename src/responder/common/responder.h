@@ -33,6 +33,7 @@
 #include <ldb.h>
 #include <dhash.h>
 
+#include "responder/common/data_provider/rdp_calls.h"
 #include "sbus/sssd_dbus.h"
 #include "responder/common/negcache.h"
 #include "sss_client/sss_cli.h"
