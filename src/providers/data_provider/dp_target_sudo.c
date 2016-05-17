@@ -47,6 +47,16 @@ static errno_t dp_sudo_parse_message(TALLOC_CTX *mem_ctx,
     dbus_error_init(&error);
     dbus_message_iter_init(msg, &iter);
 
+    /* get dp flags */
+    if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_UINT32) {
+        DEBUG(SSSDBG_CRIT_FAILURE, "Failed, to parse the message!\n");
+        ret = EIO;
+        goto done;
+    }
+
+    dbus_message_iter_get_basic(&iter, &dp_flags);
+    dbus_message_iter_next(&iter); /* step behind the request type */
+
     /* get type of the request */
     if (dbus_message_iter_get_arg_type(&iter) != DBUS_TYPE_UINT32) {
         DEBUG(SSSDBG_CRIT_FAILURE, "Failed, to parse the message!\n");
@@ -56,9 +66,6 @@ static errno_t dp_sudo_parse_message(TALLOC_CTX *mem_ctx,
 
     dbus_message_iter_get_basic(&iter, &sudo_type);
     dbus_message_iter_next(&iter); /* step behind the request type */
-
-    dp_flags = (sudo_type & DP_FAST_REPLY);
-    sudo_type = (~DP_FAST_REPLY) & sudo_type;
 
     /* get additional arguments according to the request type */
     switch (sudo_type) {

@@ -26,6 +26,7 @@
 #include "responder/common/responder_packet.h"
 #include "responder/common/responder.h"
 #include "providers/data_provider.h"
+#include "providers/data_provider/dp_responder_iface.h"
 #include "sbus/sbus_client.h"
 
 struct sss_dp_req;
@@ -556,7 +557,7 @@ sss_dp_get_account_msg(void *pvt)
             break;
     }
 
-    dp_flags = info->fast_reply ? BE_REQ_FAST : 0;
+    dp_flags = info->fast_reply ? DP_FAST_REPLY : 0;
 
     if (info->opt_name) {
         if (info->type == SSS_DP_SECID) {
@@ -584,8 +585,8 @@ sss_dp_get_account_msg(void *pvt)
 
     msg = dbus_message_new_method_call(NULL,
                                        DP_PATH,
-                                       DATA_PROVIDER_IFACE,
-                                       DATA_PROVIDER_IFACE_GETACCOUNTINFO);
+                                       IFACE_DP,
+                                       IFACE_DP_GETACCOUNTINFO);
     if (msg == NULL) {
         talloc_free(filter);
         DEBUG(SSSDBG_CRIT_FAILURE, "Out of memory?!\n");
