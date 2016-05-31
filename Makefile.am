@@ -668,6 +668,13 @@ dist_noinst_HEADERS = \
     src/providers/ipa/ipa_dn.h \
     src/providers/ipa/ipa_sudo.h \
     src/providers/ad/ad_srv.h \
+    src/providers/ad/ad_common.h \
+    src/providers/ad/ad_pac.h \
+    src/providers/ad/ad_id.h \
+    src/providers/ad/ad_access.h \
+    src/providers/ad/ad_gpo.h \
+    src/providers/ad/ad_opts.h \
+    src/providers/ad/ad_domain_info.h \
     src/providers/ad/ad_subdomains.h \
     src/providers/proxy/proxy.h \
     src/tools/tools_util.h \
@@ -3161,12 +3168,10 @@ libsss_ipa_la_SOURCES = \
     src/providers/ipa/ipa_dn.c \
     src/providers/ad/ad_opts.c \
     src/providers/ad/ad_common.c \
-    src/providers/ad/ad_common.h \
     src/providers/ad/ad_dyndns.c \
     src/providers/ad/ad_id_new.c \
     src/providers/ad/ad_pac.c \
     src/providers/ad/ad_pac_common.c \
-    src/providers/ad/ad_pac.h \
     src/providers/ad/ad_srv.c \
     src/providers/ad/ad_domain_info.c
 libsss_ipa_la_CFLAGS = \
@@ -3220,25 +3225,18 @@ endif
 libsss_ad_la_SOURCES = \
     src/providers/ad/ad_opts.c \
     src/providers/ad/ad_common.c \
-    src/providers/ad/ad_common.h \
     src/providers/ad/ad_init_new.c \
     src/providers/ad/ad_dyndns.c \
     src/providers/ad/ad_machine_pw_renewal.c \
     src/providers/ad/ad_id_new.c \
     src/providers/ad/ad_pac.c \
     src/providers/ad/ad_pac_common.c \
-    src/providers/ad/ad_pac.h \
-    src/providers/ad/ad_id.h \
     src/providers/ad/ad_access_new.c \
-    src/providers/ad/ad_access.h \
     src/providers/ad/ad_gpo.c \
-    src/providers/ad/ad_gpo.h \
     src/providers/ad/ad_gpo_ndr.c \
-    src/providers/ad/ad_opts.h \
     src/providers/ad/ad_srv.c \
     src/providers/ad/ad_subdomains_new.c \
-    src/providers/ad/ad_domain_info.c \
-    src/providers/ad/ad_domain_info.h
+    src/providers/ad/ad_domain_info.c
 
 if BUILD_SUDO
 libsss_ad_la_SOURCES += \
